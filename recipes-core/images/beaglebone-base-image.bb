@@ -1,27 +1,75 @@
-DESCRIPTION = "A base image just capable of booting the beaglebone and providing ssh."
+DESCRIPTION = "Basic console image"
 
 require recipes-core/images/core-image-minimal.bb
 
-BASE_INSTALL = " \
-    coreutils \
-    task-core-ssh-openssh \
-    htop \
-    vsftpd \
-    python \
-"
+IMAGE_FEATURES += "package-management ssh-server-openssh"
 
-DEV_TOOLS = "\
-    gdb \
-"
+BASE_INSTALL = " \
+  ${MACHINE_EXTRA_RRECOMMENDS} \
+  ${@base_contains("DISTRO_FEATURES", "bluetooth", "bluez4", "", d)} \
+  avahi avahi-utils \
+  base-files \
+  base-passwd \
+  bash \
+  coreutils \
+  dbus \
+  devmem2 \
+  netbase \
+  ntp \
+  net-tools \
+  pinentry \
+  polkit \
+  rsyslog \
+  shadow tinylogin \
+  udisks \
+  upower \
+  util-linux \
+  which \
+  zypper \
+ "
 
 KERNEL_EXTRA_INSTALL = " \
     kernel-modules \
 "
 
-IMAGE_INSTALL += " \
-    ${BASE_INSTALL} \
-    ${DEV_TOOLS} \
-    ${KERNEL_EXTRA_INSTALL} \
-"
+NETWORK_INSTALL = " \
+  networkmanager \
+  networkmanager-tests \
+  rfkill \
+  wireless-tools \
+  ${@base_contains("DISTRO_FEATURES", "wifi", "iw wpa-supplicant", "", d)} \
+ "
 
-IMAGE_FEATURES += "ssh-server-openssh openssh-sftp-server"
+TOOLS_INSTALL = " \
+  bzip2 \
+  cmake \
+  cpufrequtils \
+  dosfstools \
+  e2fsprogs \
+  evtest \
+  findutils \
+  htop \
+  iputils \
+  gawk \
+  grep \
+  libgtest \
+  gzip \
+  less \
+  packagegroup-core-ssh-openssh \
+  procps \
+  sed \
+  sudo \
+  tar \
+  vim \
+  vsftpd \
+  wget \
+  zip \
+ "
+
+IMAGE_INSTALL += " \
+  ${BASE_INSTALL} \
+  ${KERNEL_EXTRA_INSTALL} \
+  ${NETWORK_INSTALL} \
+  ${ROOTFS_PKGMANAGE} \
+  ${TOOLS_INSTALL} \
+ "
