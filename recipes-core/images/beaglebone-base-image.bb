@@ -18,6 +18,7 @@ BASE_INSTALL = " \
   ntp \
   net-tools \
   pinentry \
+  python \
   polkit \
   rsyslog \
   shadow tinylogin \
@@ -57,6 +58,7 @@ TOOLS_INSTALL = " \
   less \
   packagegroup-core-ssh-openssh \
   procps \
+  python-setuptools \
   sed \
   sudo \
   tar \
