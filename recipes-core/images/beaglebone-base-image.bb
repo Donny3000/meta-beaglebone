@@ -51,6 +51,7 @@ TOOLS_INSTALL = " \
   findutils \
   htop \
   iputils \
+  git \
   gawk \
   grep \
   libgtest \
